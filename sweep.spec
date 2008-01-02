@@ -10,6 +10,7 @@ URL: 		http://sweep.sourceforge.net/
 Source:	 	http://prdownloads.sourceforge.net/sweep/%{name}-%{version}.tar.bz2
 License: 	GPL 
 Group: 		Sound
+BuildRoot: 	%{_tmppath}/%{name}-buildroot
 BuildRequires:  gtk+2-devel
 BuildRequires:  libmad-devel
 BuildRequires:  libsamplerate-devel
