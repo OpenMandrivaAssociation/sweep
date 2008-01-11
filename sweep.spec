@@ -65,20 +65,6 @@ rm -rf $RPM_BUILD_ROOT
 rm -rf %buildroot%_datadir/locale/en_AU
 %{find_lang} %{name}
 
-(cd $RPM_BUILD_ROOT
-mkdir -p .%_menudir
-cat > .%_menudir/%{name} <<EOF
-?package(%{name}):\
-command="/usr/bin/sweep"\
-title="Sweep"\
-longtitle="Sound editor"\
-needs="x11"\
-icon="%name.png"\
-section="Multimedia/Sound" \
-xdg="true"
-EOF
-)
-
 desktop-file-install --vendor="" \
   --remove-category="Application" \
   --add-category="X-MandrivaLinux-Multimedia-Sound" \
@@ -112,7 +98,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/*
 %_datadir/applications/%name.desktop
 %{_datadir}/pixmaps/*
-%{_menudir}/*
 %dir %_libdir/sweep/
 %_libdir/sweep/*.so*
 %dir %_datadir/sweep/
