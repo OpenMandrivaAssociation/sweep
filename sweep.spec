@@ -26,7 +26,6 @@ Buildrequires: gettext-devel
 #gw lam also has a binary named sweep
 Conflicts:	lam-runtime
 %description
-
 Sweep is an audio editor and live playback tool for GNU/Linux, BSD and
 compatible systems. It supports many music and voice formats including
 WAV, AIFF, Ogg Vorbis, Speex and MP3, with multichannel editing and
