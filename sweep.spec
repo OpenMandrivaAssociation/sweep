@@ -1,5 +1,5 @@
 %define name    sweep 
-%define version 0.9.2
+%define version 0.9.3
 %define release %mkrel 1
 
 Summary: 	Sound sample editor 
@@ -7,7 +7,7 @@ Name: 		%{name}
 Version: 	%{version}
 Release: 	%{release}
 URL: 		http://sweep.sourceforge.net/
-Source:	 	http://prdownloads.sourceforge.net/sweep/%{name}-%{version}.tar.bz2
+Source:	 	http://prdownloads.sourceforge.net/sweep/%{name}-%{version}.tar.gz
 License: 	GPL 
 Group: 		Sound
 BuildRoot: 	%{_tmppath}/%{name}-buildroot
