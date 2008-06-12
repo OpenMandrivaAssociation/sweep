@@ -83,13 +83,17 @@ rsvg -w 16 -h 16 %name.svg %buildroot%_miconsdir/%name.png
 %if %mdkversion < 200900
 /sbin/ldconfig
 %endif
+%if %mdkversion < 200900
 %{update_menus}
+%endif
  
 %postun
 %if %mdkversion < 200900
 /sbin/ldconfig
 %endif
+%if %mdkversion < 200900
 %{clean_menus}  
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
