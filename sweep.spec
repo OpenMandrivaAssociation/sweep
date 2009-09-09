@@ -17,7 +17,7 @@ BuildRequires:  libsamplerate-devel
 BuildRequires:  libsndfile-devel >= 1.0.2
 BuildRequires:  libspeex-devel
 BuildRequires:  libalsa-devel
-BuildRequires:  libtdb-devel
+BuildRequires:  tdb-devel
 BuildRequires:  libvorbis-devel
 BuildRequires:  librsvg
 BuildRequires:  desktop-file-utils
