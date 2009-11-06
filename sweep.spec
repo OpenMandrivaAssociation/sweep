@@ -1,6 +1,6 @@
 %define name    sweep 
 %define version 0.9.3
-%define release %mkrel 3
+%define release %mkrel 4
 
 Summary: 	Sound sample editor 
 Name: 		%{name}
@@ -8,7 +8,10 @@ Version: 	%{version}
 Release: 	%{release}
 URL: 		http://sweep.sourceforge.net/
 Source:	 	http://prdownloads.sourceforge.net/sweep/%{name}-%{version}.tar.gz
-License: 	GPL 
+#gw received by mail from Pavel Fric
+Source1:	cs.po
+Patch: sweep-0.9.3-add-cs-po.patch
+License: 	GPLv2+
 Group: 		Sound
 BuildRoot: 	%{_tmppath}/%{name}-buildroot
 BuildRequires:  gtk+2-devel
@@ -49,14 +52,17 @@ This package contains the C headers needed to compile plugins for Sweep.
 
 %prep
 %setup -q
+%patch -p1
+cp %SOURCE1 po/
 aclocal
 autoconf
 automake -a -c
+libtoolize --install --force
 
 %build
 %configure2_5x --enable-alsa
 
-%make
+%make dist
 
 %install
 rm -rf $RPM_BUILD_ROOT
