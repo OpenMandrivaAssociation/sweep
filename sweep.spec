@@ -1,6 +1,6 @@
 %define name    sweep 
 %define version 0.9.3
-%define release %mkrel 4
+%define release %mkrel 5
 
 Summary: 	Sound sample editor 
 Name: 		%{name}
