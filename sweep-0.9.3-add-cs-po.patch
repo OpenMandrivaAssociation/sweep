@@ -1,0 +1,12 @@
+diff -p -up sweep-0.9.3/configure.ac~ sweep-0.9.3/configure.ac
+--- sweep-0.9.3/configure.ac~	2008-04-11 16:08:56.000000000 +0200
++++ sweep-0.9.3/configure.ac	2009-11-03 21:44:44.000000000 +0100
+@@ -20,7 +20,7 @@ AC_C_BIGENDIAN
+ AC_CHECK_FUNCS(strchr)
+ AC_CHECK_FUNCS(madvise)
+ 
+-ALL_LINGUAS="de el es_ES fr hu it ja pl ru en_AU"
++ALL_LINGUAS="cs de el es_ES fr hu it ja pl ru en_AU"
+ AM_GNU_GETTEXT
+ 
+ dnl Overall configuration success flag
