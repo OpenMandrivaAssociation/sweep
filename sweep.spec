@@ -1,33 +1,30 @@
-%define name    sweep 
-%define version 0.9.3
-%define release %mkrel 5
-
-Summary: 	Sound sample editor 
-Name: 		%{name}
-Version: 	%{version}
-Release: 	%{release}
-URL: 		http://sweep.sourceforge.net/
-Source:	 	http://prdownloads.sourceforge.net/sweep/%{name}-%{version}.tar.gz
+Summary:	Sound sample editor
+Name:		sweep
+Version:	0.9.3
+Release:	7
+License:	GPLv2+
+Group:		Sound
+Url:		http://sweep.sourceforge.net/
+Source0:	http://prdownloads.sourceforge.net/sweep/%{name}-%{version}.tar.gz
 #gw received by mail from Pavel Fric
 Source1:	cs.po
-Patch: sweep-0.9.3-add-cs-po.patch
-License: 	GPLv2+
-Group: 		Sound
-BuildRoot: 	%{_tmppath}/%{name}-buildroot
-BuildRequires:  gtk+2-devel
-BuildRequires:  libmad-devel
-BuildRequires:  libsamplerate-devel
-BuildRequires:  libsndfile-devel >= 1.0.2
-BuildRequires:  libspeex-devel
-BuildRequires:  libalsa-devel
-BuildRequires:  tdb-devel
-BuildRequires:  libvorbis-devel
-BuildRequires:  librsvg
-BuildRequires:  desktop-file-utils
+Patch0:		sweep-0.9.3-add-cs-po.patch
+BuildRequires:	desktop-file-utils
+BuildRequires:	librsvg
 #gw aclocal
-Buildrequires: gettext-devel
+Buildrequires:	gettext-devel
+BuildRequires:	pkgconfig(alsa)
+BuildRequires:	pkgconfig(gtk+-2.0)
+BuildRequires:	pkgconfig(mad)
+BuildRequires:	pkgconfig(ogg)
+BuildRequires:	pkgconfig(samplerate)
+BuildRequires:	pkgconfig(sndfile)
+BuildRequires:	pkgconfig(speex)
+BuildRequires:	pkgconfig(tdb)
+BuildRequires:	pkgconfig(vorbis)
 #gw lam also has a binary named sweep
 Conflicts:	lam-runtime
+
 %description
 Sweep is an audio editor and live playback tool for GNU/Linux, BSD and
 compatible systems. It supports many music and voice formats including
@@ -35,10 +32,23 @@ WAV, AIFF, Ogg Vorbis, Speex and MP3, with multichannel editing and
 LADSPA effects plugins. Inside lives a pesky little virtual stylus called
 Scrubby who enjoys mixing around in your files.
 
+%files -f %{name}.lang
+%doc README ABOUT-NLS AUTHORS COPYING ChangeLog NEWS
+%{_bindir}/*
+%{_mandir}/man1/*
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/pixmaps/*
+%dir %{_libdir}/sweep/
+%{_libdir}/sweep/*.so
+%dir %{_datadir}/sweep/
+%{_datadir}/sweep/sweep_splash.png
+%{_iconsdir}/hicolor/scalable/apps/%{name}.svg
+
+#----------------------------------------------------------------------------
+
 %package devel
-Summary: C headers for developing Sweep plugins
-Group: Development/C
-Requires: %name = %version
+Summary:	C headers for developing Sweep plugins
+Group:		Development/C
 
 %description devel
 Sweep is an audio editor and live playback tool for GNU/Linux, BSD and
@@ -49,26 +59,32 @@ Scrubby who enjoys mixing around in your files.
 
 This package contains the C headers needed to compile plugins for Sweep.
 
+%files devel
+%doc doc/*.txt
+%dir %{_includedir}/%{name}
+%{_includedir}/%{name}/*.h
+
+#----------------------------------------------------------------------------
 
 %prep
 %setup -q
-%patch -p1
-cp %SOURCE1 po/
+%patch0 -p1
+cp %{SOURCE1} po/
 aclocal
 autoconf
 automake -a -c
 libtoolize --install --force
 
 %build
-%configure2_5x --enable-alsa
+LDFLAGS="-lgmodule" %configure2_5x --enable-alsa
 
-%make dist
+%make
 
 %install
-rm -rf $RPM_BUILD_ROOT
 %makeinstall_std MKINSTALLDIRS=`pwd`/mkinstalldirs
-rm -rf %buildroot%_datadir/locale/en_AU
-%{find_lang} %{name}
+rm -rf %{buildroot}%{_datadir}/locale/en_AU
+
+%find_lang %{name}
 
 desktop-file-install --vendor="" \
   --remove-category="Application" \
@@ -76,53 +92,8 @@ desktop-file-install --vendor="" \
   --add-category="AudioVideo" \
   --add-category="Audio" \
   --add-category="Sequencer" \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications $RPM_BUILD_ROOT%{_datadir}/applications/*
+  --dir %{buildroot}%{_datadir}/applications %{buildroot}%{_datadir}/applications/*
 
-
-mkdir -p %buildroot{%_iconsdir,%_liconsdir,%_miconsdir}
-rsvg -w 48 -h 48 %name.svg %buildroot%_liconsdir/%name.png
-rsvg -w 32 -h 32 %name.svg %buildroot%_iconsdir/%name.png
-rsvg -w 16 -h 16 %name.svg %buildroot%_miconsdir/%name.png
-
-
-%post
-%if %mdkversion < 200900
-/sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%{update_menus}
-%endif
- 
-%postun
-%if %mdkversion < 200900
-/sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%{clean_menus}  
-%endif
-
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-%files -f %{name}.lang
-%defattr(-,root,root)
-%doc README ABOUT-NLS AUTHORS COPYING ChangeLog INSTALL NEWS
-%{_bindir}/*
-%{_mandir}/man1/*
-%_datadir/applications/%name.desktop
-%{_datadir}/pixmaps/*
-%dir %_libdir/sweep/
-%_libdir/sweep/*.so*
-%dir %_datadir/sweep/
-%_datadir/sweep/sweep_splash.png
-%_liconsdir/%name.png
-%_iconsdir/%name.png
-%_miconsdir/%name.png
-
-%files devel 
-%defattr(-,root,root)
-%doc doc/*.txt
-%dir %_includedir/%name
-%_includedir/%name/*.h
-
+install -d %{buildroot}%{_iconsdir}/hicolor/scalable/apps/
+install -m644 %{name}.svg %{buildroot}%{_iconsdir}/hicolor/scalable/apps/
 
