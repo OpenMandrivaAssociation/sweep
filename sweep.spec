@@ -78,7 +78,7 @@ cp %{SOURCE1} po/
 autoreconf -fi
 # fix for wrongly set plugin dir on 64-bit
 sed -i 's/sweep_plugin_dir=.*/sweep_plugin_dir="$PACKAGE_PLUGIN_DIR"/' configure
-LDFLAGS="-lgmodule -lX11" %configure2_5x --enable-alsa
+LDFLAGS="-lgmodule-2.0 -lX11" %configure2_5x --enable-alsa
 
 %make
 
