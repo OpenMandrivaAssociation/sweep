@@ -1,0 +1,11 @@
+diff -up sweep-0.9.3/src/main.c.multithread sweep-0.9.3/src/main.c
+--- sweep-0.9.3/src/main.c.multithread	2009-03-01 15:34:00.000000000 +0100
++++ sweep-0.9.3/src/main.c	2009-03-01 15:34:22.000000000 +0100
+@@ -138,6 +138,7 @@ main (int argc, char *argv[])
+ #endif
+ #endif
+ 
++  XInitThreads();
+   gtk_init (&argc, &argv);
+ 
+ #ifdef HAVE_PUTENV

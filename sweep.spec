@@ -9,8 +9,10 @@ Source0:	http://prdownloads.sourceforge.net/sweep/%{name}-%{version}.tar.gz
 #gw received by mail from Pavel Fric
 Source1:	cs.po
 Patch0:		sweep-0.9.3-add-cs-po.patch
+Patch1:		sweep-0.9.3-multithread.patch
 BuildRequires:	desktop-file-utils
 BuildRequires:	librsvg
+BuildRequires:	libtool
 #gw aclocal
 Buildrequires:	gettext-devel
 BuildRequires:	pkgconfig(alsa)
@@ -69,14 +71,14 @@ This package contains the C headers needed to compile plugins for Sweep.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 cp %{SOURCE1} po/
-aclocal
-autoconf
-automake -a -c
-libtoolize --install --force
 
 %build
-LDFLAGS="-lgmodule" %configure2_5x --enable-alsa
+autoreconf -fi
+# fix for wrongly set plugin dir on 64-bit
+sed -i 's/sweep_plugin_dir=.*/sweep_plugin_dir="$PACKAGE_PLUGIN_DIR"/' configure
+LDFLAGS="-lgmodule -lX11" %configure2_5x --enable-alsa
 
 %make
 
