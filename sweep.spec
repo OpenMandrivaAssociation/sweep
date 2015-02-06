@@ -1,7 +1,7 @@
 Summary:	Sound sample editor
 Name:		sweep
 Version:	0.9.3
-Release:	7
+Release:	8
 License:	GPLv2+
 Group:		Sound
 Url:		http://sweep.sourceforge.net/
