@@ -4,7 +4,7 @@ Version:	0.9.3
 Release:	8
 License:	GPLv2+
 Group:		Sound
-Url:		http://sweep.sourceforge.net/
+Url:		https://sweep.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/sweep/%{name}-%{version}.tar.gz
 #gw received by mail from Pavel Fric
 Source1:	cs.po
